@@ -1842,6 +1842,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -37058,7 +37060,14 @@ var render = function() {
           _vm._v(" "),
           _c("v-btn", { attrs: { color: "green", type: "submit" } }, [
             _vm._v("Login")
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { attrs: { to: "/signup" } },
+            [_c("v-btn", { attrs: { color: "blue" } }, [_vm._v("Signup")])],
+            1
+          )
         ],
         1
       )
@@ -77936,12 +77945,6 @@ function () {
   }
 
   _createClass(Token, [{
-    key: "payload",
-    value: function payload(token) {
-      var payload = token.split('.')[1];
-      return JSON.parse(atob(payload));
-    }
-  }, {
     key: "isValid",
     value: function isValid(token) {
       var payload = this.payload(token);
@@ -77951,6 +77954,17 @@ function () {
       }
 
       return false;
+    }
+  }, {
+    key: "payload",
+    value: function payload(token) {
+      var payload = token.split('.')[1];
+      return this.decode(payload);
+    }
+  }, {
+    key: "decode",
+    value: function decode(payload) {
+      return JSON.parse(atob(payload));
     }
   }]);
 
@@ -77994,19 +78008,18 @@ function () {
       var _this = this;
 
       axios.post('api/auth/login', data).then(function (res) {
-        return _this.responseAfterlogin(res);
+        return _this.responseAfterLogin(res);
       })["catch"](function (error) {
         return console.log(error.response.data);
       });
     }
   }, {
-    key: "responseAfterlogin",
-    value: function responseAfterlogin(res) {
+    key: "responseAfterLogin",
+    value: function responseAfterLogin(res) {
       var access_token = res.data.access_token;
       var username = res.data.user;
 
       if (_Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(access_token)) {
-        console.log(access_token);
         _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].store(access_token, username);
       }
     }
@@ -78022,29 +78035,27 @@ function () {
       return false;
     }
   }, {
-    key: "login",
-    value: function login() {
+    key: "loggedin",
+    value: function loggedin() {
       return this.hasToken();
     }
   }, {
-    key: "logout",
-    value: function logout() {
+    key: "loggedout",
+    value: function loggedout() {
       _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].clear();
     }
   }, {
     key: "name",
     value: function name() {
-      if (this.login()) {
+      if (this.loggedin()) {
         return _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getUser();
       }
     }
   }, {
     key: "id",
     value: function id() {
-      if (this.login()) {
-        var payload = _Token__WEBPACK_IMPORTED_MODULE_0__["default"].payload(_AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken());
-        return payload.sub;
-      }
+      var payload = _Token__WEBPACK_IMPORTED_MODULE_0__["default"].payload(_AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken());
+      return payload.sub;
     }
   }]);
 
@@ -78078,7 +78089,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 window.User = _Helpers_User__WEBPACK_IMPORTED_MODULE_2__["default"];
-console.log(_Helpers_User__WEBPACK_IMPORTED_MODULE_2__["default"].id());
+console.log(_Helpers_User__WEBPACK_IMPORTED_MODULE_2__["default"].id()); //User.loggedout()
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('AppHome', __webpack_require__(/*! ./components/AppHome.vue */ "./resources/js/components/AppHome.vue")["default"]);
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -78471,8 +78483,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\RealtimeForum\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\RealtimeForum\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /media/imtiaz/My Property/RealtimeForum/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /media/imtiaz/My Property/RealtimeForum/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

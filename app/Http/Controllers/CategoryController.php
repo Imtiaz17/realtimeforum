@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class CategoryController extends Controller
 {

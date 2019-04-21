@@ -7,9 +7,9 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
 import User from './Helpers/User'
-window.User = User
+window.User= User
 console.log(User.id())
-
+//User.loggedout()
 
 Vue.component('AppHome', require('./components/AppHome.vue').default);
 import router from './components/Router/router.js'

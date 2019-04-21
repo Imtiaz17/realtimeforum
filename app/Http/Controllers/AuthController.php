@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -13,7 +13,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('jwt', ['except' => ['login','signup']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
@@ -31,12 +31,6 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
-    public function signup(Request $request)
-    {
-       
-        User::create($request->all());
-        return $this->login($request);
-    } 
 
     /**
      * Get the authenticated User.
@@ -83,7 +77,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user'=> auth()->user()->name
+            'user' => auth()->user()->name
         ]);
     }
 }
