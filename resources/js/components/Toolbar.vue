@@ -3,10 +3,14 @@
     <v-toolbar-title>Title</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
-      <v-btn flat>Forum</v-btn>
-      <v-btn flat>Ask Question</v-btn>
-      <v-btn flat>Category</v-btn>
-      <router-link to="/login"><v-btn flat>Login</v-btn></router-link>
+    
+      <router-link
+      v-for="item in items"
+      :key="item.title"
+      :to="item.to"
+      v-if="item.show">
+        <v-btn flat>{{ item.title }}</v-btn>
+      </router-link>
       
     </div>
   </v-toolbar>
@@ -14,6 +18,22 @@
 
 <script>
 export default {
+  data(){
+    return{
+      items:[
+        {title : 'Forum', to:'/forum', show:true},
+        {title : 'Ask Question', to:'/ask', show: User.loggedin()},
+        {title : 'Category', to:'/category', show: User.loggedin()},
+        {title : 'Login', to:'/login', show: !User.loggedin()},
+        {title : 'Logout', to:'/logout', show: User.loggedin()},
+      ]
+    }
+  },
+  created(){
+    EventBus.$on('logout',()=>{
+      User.logout()
+    })
+  }
 
 }
 </script>

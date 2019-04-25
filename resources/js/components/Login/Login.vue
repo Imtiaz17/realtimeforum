@@ -34,9 +34,15 @@ export default {
             }
         }
     },
+    created(){
+        if(User.loggedin()){
+            this.$router.push({name:'Forum'})
+        }
+    },
     methods:{
         login(){
             User.login(this.form)
+           
         }
     }
 }

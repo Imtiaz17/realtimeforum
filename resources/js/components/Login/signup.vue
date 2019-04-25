@@ -1,10 +1,10 @@
 <template>
-    <v-container>
-    <v-form @submit.prevent="signup">
+<v-container>
+    <v-form @submit.prevent="signap">
         <v-text-field
             label="Name"
             v-model="form.name"
-            type="name"
+            type="text"
             required
         ></v-text-field>
         <span class="red--text" v-if="errors.name">{{ errors.name[0] }}</span>
@@ -14,7 +14,7 @@
             type="email"
             required
         ></v-text-field>
-        <span class="red--text" v-if="errors.email">{{ errors.email[0] }}</span>
+         <span class="red--text" v-if="errors.email">{{ errors.email[0] }}</span>
 
         <v-text-field
             label="Password"
@@ -22,24 +22,24 @@
             type="password"
             required
         ></v-text-field>
-        <span class="red--text" v-if="errors.password">{{ errors.password[0] }}</span>
+         <span class="red--text" v-if="errors.password">{{ errors.password[0] }}</span>
         <v-text-field
             label="Password"
-            v-model="form.confirmPassword"
+            v-model="form.password_confirmation"
             type="password"
             required
         ></v-text-field>
-        <span class="red--text" v-if="errors.confirmPassword">{{ errors.confirmPassword[0] }}</span>
-
+        <span class="red--text" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</span>
         <v-btn  
         color="green"
-        type="submit">Signup</v-btn>
+        type="submit">signup</v-btn>
         <router-link to="/login">
-        <v-btn color="blue">Login</v-btn>
+        <v-btn color="blue">Log in</v-btn>
         </router-link>
     </v-form>
 </v-container>
 </template>
+
 
 <script>
 export default {
@@ -50,19 +50,28 @@ export default {
                 name:null,
                 email:null,
                 password:null,
-                confirmPassword:null
+                password_confirmation:null
             },
             errors:
             {
 
             }
+            
+        }
+    },
+    created(){
+        if(User.loggedin()){
+            this.$router.push({name:'Forum'})
         }
     },
     methods:{
-        signup(){
+        signap(){
             axios.post('/api/auth/signup',this.form)
-            .then(res=> User.responseAfterlogin(res))
-            .catch(error=> this.errors= error.response.data.errors)
+            .then(res => {
+                User.responseAfterLogin(res)
+                this.$router.push({name:'Forum'})
+                })          
+            .catch(error => this.errors=error.response.data.errors)
 
         }
     }
