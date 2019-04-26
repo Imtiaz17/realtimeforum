@@ -1871,6 +1871,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1878,7 +1879,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      question: {}
+      question: null
     };
   },
   created: function created() {
@@ -1956,7 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post('/api/question', this.form).then(function (res) {
-        return console.log(res.data);
+        return _this2.$router.push(res.data.path);
       })["catch"](function (error) {
         return _this2.errors = error.response.data;
       });
@@ -2029,8 +2030,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data']
+  props: ['data'],
+  data: function data() {
+    return {
+      own: User.own(this.data.user_id)
+    };
+  },
+  computed: {
+    body: function body() {
+      return md.parse(this.data.body);
+    }
+  },
+  methods: {
+    destroy: function destroy() {
+      var _this = this;
+
+      axios["delete"]("/api/question/".concat(this.data.slug)).then(function (res) {
+        return _this.$router.push('/forum');
+      })["catch"](function (error) {
+        return console.log(error.res.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -20689,7 +20716,7 @@ if (!CodeMirror.mimeModes.hasOwnProperty("text/html"))
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/simplemde/dist/simplemde.min.css?e57b":
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/simplemde/dist/simplemde.min.css":
 /*!***************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./node_modules/simplemde/dist/simplemde.min.css ***!
   \***************************************************************************************************************************************/
@@ -52840,7 +52867,7 @@ process.umask = function() { return 0; };
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./simplemde.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/simplemde/dist/simplemde.min.css?e57b");
+var content = __webpack_require__(/*! !../../css-loader??ref--6-1!../../postcss-loader/src??ref--6-2!./simplemde.min.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/simplemde/dist/simplemde.min.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -56612,7 +56639,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("show-question", { attrs: { data: _vm.question } })
+  return _vm.question
+    ? _c("show-question", { attrs: { data: _vm.question } })
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -56816,7 +56845,28 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("v-card-text", { domProps: { innerHTML: _vm._s(_vm.data.body) } })
+          _c("v-card-text", { domProps: { innerHTML: _vm._s(_vm.body) } }),
+          _vm._v(" "),
+          _vm.own
+            ? _c(
+                "v-card-actions",
+                [
+                  _c("v-btn", { attrs: { flat: "", color: "blue" } }, [
+                    _vm._v("edit")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "red" },
+                      on: { click: _vm.destroy }
+                    },
+                    [_vm._v("delete")]
+                  )
+                ],
+                1
+              )
+            : _vm._e()
         ],
         1
       )
@@ -98039,6 +98089,11 @@ function () {
       var payload = _Token__WEBPACK_IMPORTED_MODULE_0__["default"].payload(_AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].getToken());
       return payload.sub;
     }
+  }, {
+    key: "own",
+    value: function own(id) {
+      return this.id() == id;
+    }
   }]);
 
   return User;
@@ -98065,8 +98120,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simplemde__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_simplemde__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var simplemde_dist_simplemde_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! simplemde/dist/simplemde.min.css */ "./node_modules/simplemde/dist/simplemde.min.css");
 /* harmony import */ var simplemde_dist_simplemde_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(simplemde_dist_simplemde_min_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Helpers_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Helpers/User */ "./resources/js/Helpers/User.js");
-/* harmony import */ var _components_Router_router_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Router/router.js */ "./resources/js/components/Router/router.js");
+/* harmony import */ var marked__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! marked */ "./node_modules/marked/lib/marked.js");
+/* harmony import */ var marked__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(marked__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Helpers_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Helpers/User */ "./resources/js/Helpers/User.js");
+/* harmony import */ var _components_Router_router_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Router/router.js */ "./resources/js/components/Router/router.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -98075,15 +98132,17 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_simplemde__WEBPACK_IMPORTED_MODULE_2___default.a);
+
+window.md = marked__WEBPACK_IMPORTED_MODULE_4___default.a;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 
-window.User = _Helpers_User__WEBPACK_IMPORTED_MODULE_4__["default"];
+window.User = _Helpers_User__WEBPACK_IMPORTED_MODULE_5__["default"];
 window.EventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('AppHome', __webpack_require__(/*! ./components/AppHome.vue */ "./resources/js/components/AppHome.vue")["default"]);
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  router: _components_Router_router_js__WEBPACK_IMPORTED_MODULE_5__["default"]
+  router: _components_Router_router_js__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 
 /***/ }),

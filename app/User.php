@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Model\Question;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -59,6 +60,10 @@ class User extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($value)
     {
         $this->attributes['password']=bcrypt($value);
+    }
+    public function question()
+    {
+        return $this->hasMany(Question::class);
     }
     
 
