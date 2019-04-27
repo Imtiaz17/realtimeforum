@@ -5,7 +5,8 @@
        <question
        v-for="question in questions"
        :key="question.path"
-       :question=question></question>
+       :question=question>
+     </question>
       </v-flex>
       Sidebar
     </v-layout>

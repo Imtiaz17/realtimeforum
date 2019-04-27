@@ -2,13 +2,11 @@
     <v-container>
     <v-form @submit.prevent="ask">
         <v-text-field
-        
-            label="Title"
-            v-model="form.title"
-            type="text"
-            required
+        label="Title"
+        v-model="form.title"
+        type="text"
+        required
         ></v-text-field>
-    
         <v-autocomplete
         :items="categories"
         item-text="name"

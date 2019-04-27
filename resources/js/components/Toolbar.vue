@@ -1,6 +1,6 @@
 <template>
   <v-toolbar>
-    <v-toolbar-title>Title</v-toolbar-title>
+    <v-toolbar-title>Realtimeforum</v-toolbar-title>
     <v-spacer></v-spacer>
     <div class="hidden-sm-and-down">
     
