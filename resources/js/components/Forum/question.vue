@@ -1,5 +1,5 @@
 <template>
-      <v-card>
+      <v-card class="mt-2">
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">
@@ -13,15 +13,19 @@
                 </div>
           </div>
         </v-card-title>
-         <v-card-text>
-            {{ question.body}}
-         </v-card-text>
+        <v-card-text v-html="body"></v-card-text>
       </v-card>
 </template>
 
 <script>
 export default {
-    props:['question']
+    props:['question'],
+    computed:{
+        body(){
+            return md.parse(this.question.body)
+        }
+
+    }
 
 }
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller
 {
@@ -40,7 +41,7 @@ class CategoryController extends Controller
         $category->name=$request->name;
         $category->slug=str_slug($request->name);
         $category->save();
-        return response('created',Response::HTTP_ACCEPTED);
+        return response(new CategoryResource($category),Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -71,7 +72,7 @@ class CategoryController extends Controller
             ]
             
             );
-            return response('updated', Response::HTTP_ACCEPTED);
+            return response(new CategoryResource($category), Response::HTTP_ACCEPTED);
     }
 
     /**
