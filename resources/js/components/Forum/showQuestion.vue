@@ -9,7 +9,7 @@
                 <span class="grey--text">{{ data.user }} Asked {{ data.created_at }}</span>
                 </div>
                 <v-spacer></v-spacer>
-                <v-btn color="teal">5 Reaplies</v-btn>
+                <v-btn color="teal" dark>{{ data.reply_count }} Replies</v-btn>
             </v-card-title>
             <v-card-text v-html="body"></v-card-text>
             <v-card-actions v-if="own">
