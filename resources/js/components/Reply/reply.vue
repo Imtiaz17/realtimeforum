@@ -6,29 +6,62 @@
                 <div class="ml-2">{{ data.created_at }}</div>
             </v-card-title>
              <v-divider></v-divider>
-            <v-card-text v-html="data.reply"></v-card-text>
+           
+            <edit-reply 
+            v-if="editing"
+            :reply=data>
+            </edit-reply>
+            <v-card-text v-else v-html="reply"></v-card-text>
+              <div v-if="!editing">
             <v-card-actions v-if="own">
                 <v-btn icon small>
-                    <v-icon color="blue">edit</v-icon>
+                    <v-icon color="blue" @click="edit">edit</v-icon>
                 </v-btn>
                 <v-btn icon small>
-                    <v-icon color="red">delete</v-icon>
+                    <v-icon color="red" @click="destroy">delete</v-icon>
                 </v-btn>
                 
             </v-card-actions>
+              </div>
         </v-card>
     </div>
 </template>
 
 <script>
+import EditReply from './editReply'
 export default {
-    props:['data'],
+    props:['data','index'],
+    components:{EditReply},
      data(){
         return{
-            own : User.own(this.data.user_id)
+            editing:false
         }
-
     },
+    computed:{
+        own(){
+            return User.own(this.data.user_id);
+        },
+        reply(){
+            return md.parse(this.data.reply)
+        }
+    },
+    created(){
+        this.listen()
+    },
+    methods:{
+        destroy(){
+             EventBus.$emit('deleteReply',this.index)
+           
+        },
+        edit(){
+            this.editing=true
+        },
+        listen(){
+            EventBus.$on('cancelEditing',()=>{
+                this.editing=false
+            })
+        }
+    }
 
 }
 </script>

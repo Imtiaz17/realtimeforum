@@ -1,7 +1,8 @@
 <template>
     <div>
-        <reply v-for="reply in contents"
+        <reply v-for="(reply,index) in content"
         :key="reply.id"
+        :index=index
         :data="reply">
         </reply>
     </div>
@@ -11,10 +12,10 @@
 import reply from './reply'
 export default {
     
-    props:['replies'],
+    props:['question'],
     data(){
         return{
-            contents:this.replies
+            content:this.question.replies
         }
     },
     components:{reply},
@@ -24,9 +25,15 @@ export default {
     methods:{
         listen(){
             EventBus.$on('newReply',(reply)=>{
-                this.contents.unshift(reply)
+                this.content.unshift(reply)
                 window.scrollTo(0,0)
 
+            }),
+             EventBus.$on('deleteReply',(index) => {
+                axios.delete(`/api/question/${this.question.slug}/reply/${this.content[index].id}`)
+                .then(res => {
+                    this.content.splice(index,1)                    
+                })
             })
         }
     }

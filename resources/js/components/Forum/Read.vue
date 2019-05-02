@@ -8,7 +8,7 @@
         :data = question>
         </show-question>
         <v-container>
-        <replies :replies="question.replies"></replies>
+        <replies :question="question"></replies>
         <new-reply :questionslug="question.slug"></new-reply>
         </v-container>
         

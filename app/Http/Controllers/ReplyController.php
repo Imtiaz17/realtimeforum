@@ -81,10 +81,12 @@ class ReplyController extends Controller
      * @param  \App\Model\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reply $reply)
+    public function update(Question $question, Request $request, Reply $reply)
     {
-        //
+        $reply->update($request->all());
+        return response('Update', Response::HTTP_ACCEPTED);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -92,8 +94,9 @@ class ReplyController extends Controller
      * @param  \App\Model\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reply $reply)
+    public function destroy(Question $question, Reply $reply)
     {
-        //
+        $reply->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }
