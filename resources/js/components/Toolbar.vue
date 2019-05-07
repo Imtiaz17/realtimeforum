@@ -2,6 +2,7 @@
   <v-toolbar>
     <v-toolbar-title>Realtimeforum</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification></app-notification>
     <div class="hidden-sm-and-down">
     
       <router-link
@@ -17,7 +18,9 @@
 </template>
 
 <script>
+import AppNotification from './AppNotification';
 export default {
+  components:{AppNotification},
   data(){
     return{
       items:[
