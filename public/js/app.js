@@ -2567,7 +2567,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       Echo["private"]('App.User.' + User.id()).notification(function (notification) {
-        console.log(notification.type);
+        _this.content.unshift(notification.reply);
       });
     }
   }

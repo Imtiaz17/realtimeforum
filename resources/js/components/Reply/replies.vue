@@ -37,7 +37,7 @@ export default {
             })
             Echo.private('App.User.' + User.id())
                 .notification((notification) => {
-                    console.log(notification.type);
+                    this.content.unshift(notification.reply)
                 });
         }
     }
