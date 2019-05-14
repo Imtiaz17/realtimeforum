@@ -21,6 +21,14 @@ export default {
             return this.liked? 'red' : 'red lighten-4';
         }
     },
+    created(){
+        Echo.channel('likeChannel')
+        .listen('LikeEvent', (e) => {
+        if(this.reply.id==e.id){
+                e.type==1? this.count++ : this.count--
+            }
+    });
+    },
     methods:{
         like(){
             if(User.loggedin()){
@@ -32,14 +40,12 @@ export default {
         inc()
         {
             axios.post(`/api/like/${this.reply.id}`)
-            .then
-            (this.count++)
+            .then(res=>this.count++)
         },
         dec()
         {
             axios.delete(`/api/like/${this.reply.id}`)
-            .then
-            (this.count--)
+            .then(res=>this.count--)
         }
     }
 
