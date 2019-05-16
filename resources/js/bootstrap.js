@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -12,7 +11,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -23,9 +23,9 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-const jwtToken =`Bearer ${localStorage.getItem('token')}`
+const jwtToken = `Bearer ${localStorage.getItem('token')}`
 window.axios.defaults.headers.common['Authorization'] = jwtToken;
- 
+
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just
@@ -55,9 +55,9 @@ window.Echo = new Echo({
     key: "d84e18d76227bea77179",
     cluster: "ap2",
     encrypted: true,
-    auth:{
-        headers:{
-            Authorization : jwtToken
+    auth: {
+        headers: {
+            Authorization: jwtToken
         }
     }
 });

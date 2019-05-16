@@ -28,36 +28,37 @@ class NewReplyNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function via($notifiable)
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
 
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-           'replyBy'=>$this->reply->user->name,
-           'question'=>$this->reply->question->title,
-           'path'=>$this->reply->question->path,
+            'replyBy' => $this->reply->user->name,
+            'question' => $this->reply->question->title,
+            'path' => $this->reply->question->path,
         ];
     }
+
     public function toBroadcast($notifiable)
-{
-    return new BroadcastMessage([
-        'reply'=>new ReplyResource($this->reply) ,
-        'replyBy'=>$this->reply->user->name,
-        'question'=>$this->reply->question->title,
-        'path'=>$this->reply->question->path,
-    ]);
-}
+    {
+        return new BroadcastMessage([
+            'reply' => new ReplyResource($this->reply),
+            'replyBy' => $this->reply->user->name,
+            'question' => $this->reply->question->title,
+            'path' => $this->reply->question->path,
+        ]);
+    }
 }

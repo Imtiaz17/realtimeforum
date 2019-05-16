@@ -2569,6 +2569,13 @@ __webpack_require__.r(__webpack_exports__);
       Echo["private"]('App.User.' + User.id()).notification(function (notification) {
         _this.content.unshift(notification.reply);
       });
+      Echo.channel('deleteReplyChannel').listen('DeleteReplyEvent', function (e) {
+        for (var index = 0; index < _this.content.length; index++) {
+          if (_this.content[index].id == e.id) {
+            _this.content.splice(index, 1);
+          }
+        }
+      });
     }
   }
 });
