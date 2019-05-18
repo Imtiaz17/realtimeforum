@@ -38,13 +38,12 @@
         components: {EditReply, like},
         data() {
             return {
-                editing: false
+                editing: false,
+                 own : User.own(this.data.user_id)
             }
         },
         computed: {
-            own() {
-                return User.own(this.data.user_id);
-            },
+            
             reply() {
                 return md.parse(this.data.reply)
             }

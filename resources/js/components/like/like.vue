@@ -34,7 +34,7 @@ export default {
             if(User.loggedin()){
                 
                 this.liked? this.dec() : this.inc() 
-                this.liked=true
+                this.liked=!this.liked
             }
         },
         inc()

@@ -9,7 +9,7 @@
         </show-question>
         <v-container>
         <replies :question="question"></replies>
-        <new-reply :questionslug="question.slug"></new-reply>
+        <new-reply v-if="loggedIn" :questionslug="question.slug"></new-reply>
         </v-container>
         
    </div>
@@ -31,6 +31,11 @@ export default {
     created(){
        this.getQuestion(),
        this.listen()
+    },
+    computed:{
+      loggedIn(){
+        return User.loggedin()
+      }
     },
     methods:{
         listen(){
