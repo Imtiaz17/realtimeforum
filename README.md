@@ -1,3 +1,3 @@
 #This is realtime Single page app forum
 
-##Using laravel, pusher, Vuejs, Vuetify, JWT and markdown
+##Using restfull api of laravel, pusher, Vuejs, Vuetify, JWT and markdown
